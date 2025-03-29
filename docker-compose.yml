@@ -1,0 +1,22 @@
+networks:
+    shared-services:
+        external: true
+
+services:
+  secret-gift-api:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    image: secret-gift-api:latest
+    restart: always
+    env_file:
+      - .env
+    environment:
+      - WATCH_FILES=${WATCH_FILES}
+      - DEBUG=${DEBUG}
+    ports:
+      - 5000:5000
+    volumes:
+      - .:/go/src/app  # Map the source code to the container
+    networks:
+      - shared-services

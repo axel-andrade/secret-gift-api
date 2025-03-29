@@ -1,0 +1,20 @@
+# Imagem base do Go
+FROM golang:1.24.0-alpine
+
+# Crie um diretório de trabalho dentro do contêiner
+WORKDIR /app
+
+# Copie os arquivos do projeto para o diretório de trabalho
+COPY . .
+
+# Instale as dependências
+RUN go mod download
+
+# Instale o Fresh
+RUN go install github.com/pilu/fresh@latest
+
+# Compile o código da aplicação, especificando o caminho correto
+RUN go build -o app ./cmd/api/main.go
+
+# Execute a aplicação com Fresh se a variável de ambiente WATCH_FILES for 1, caso contrário, execute o binário normal
+CMD if [ "$WATCH_FILES" == "1" ]; then fresh; else ./app; fi
