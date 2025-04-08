@@ -20,6 +20,7 @@ func ConfigRoutes(router *gin.Engine, dependencies *bootstrap.Dependencies) *gin
 
 	v1 := router.Group("v1")
 	configureGiftsRoutes(v1, dependencies)
+	configureAuthorizedGiftsRoutes(v1, dependencies)
 
 	return router
 }

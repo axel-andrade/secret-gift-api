@@ -24,9 +24,9 @@ func (p *CreateGiftPresenter) Show(result *create_gift.CreateGiftOutputDTO, err 
 
 	data := p.giftPtr.Format(*result.Gift)
 
-	return common_adapters.OutputPort{StatusCode: http.StatusOK, Data: data}
+	return common_adapters.OutputPort{StatusCode: http.StatusCreated, Data: data}
 }
 
 func (p *CreateGiftPresenter) formatError() common_adapters.OutputPort {
-	return common_adapters.OutputPort{StatusCode: http.StatusBadRequest, Data: common_adapters.ErrorMessage{Message: err_msg.INTERNAL_SERVER_ERROR}}
+	return common_adapters.OutputPort{StatusCode: http.StatusInternalServerError, Data: common_adapters.ErrorMessage{Message: err_msg.INTERNAL_SERVER_ERROR}}
 }

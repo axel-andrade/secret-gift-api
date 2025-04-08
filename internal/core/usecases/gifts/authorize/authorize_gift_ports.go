@@ -1,22 +1,22 @@
 package authorize_gift
 
 import (
+	"time"
+
 	"github.com/axel-andrade/secret-gift-api/internal/core/domain"
 )
 
 type AuthorizeGiftGateway interface {
-	CreateGift(gift *domain.Gift) (*domain.Gift, error)
+	GetGift(id string) (*domain.Gift, error)
+	GetAuthorizedGift(giftId string) (*domain.AuthorizedGift, error)
+	CreateAuthorizedGift(ag *domain.AuthorizedGift) (*domain.AuthorizedGift, error)
 }
 
-type CreateGiftInputDTO struct {
-	Type       domain.GiftType `json:"type"`
-	CPF        string          `json:"cpf"`
-	Amount     float64         `json:"amount"`
-	PixKeyType string          `json:"pix_key_type"`
-	PixKey     string          `json:"pix_key"`
-	Message    string          `json:"message"`
+type AuthorizeGiftInput struct {
+	GiftID         string     `json:"gift_id"`
+	ExpirationDate *time.Time `json:"expiration_date"`
 }
 
-type CreateGiftOutputDTO struct {
-	Gift *domain.Gift
+type AuthorizeGiftOutput struct {
+	AuthorizedGift *domain.AuthorizedGift
 }
